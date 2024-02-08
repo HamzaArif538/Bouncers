@@ -78,7 +78,7 @@
         <div class="navcontbot-1st">
             <div class="dropdown">
                 <button class="dropbtn"> 
-                    <i class="fa-solid fa-border-all"></i>
+                    <i class="smallicon fa-solid fa-border-all"></i>
                     <p>Browse All Categories</p>
                     <i class="smallicon fa-solid fa-angle-down"></i>
                 </button>
@@ -110,13 +110,13 @@
                     <a href="/">Home</a>
                 </li>
                 <li class="navbar-item {% if request.path == '/products' %}active{% endif %}">
-                    <a href="">Products</a>
+                    <a href="{% url "products" %}">Products</a>
                 </li>
                 <li class="navbar-item {% if request.path == '/aboutus' %}active{% endif %}">
-                    <a href="">About Us</a>
+                    <a href="{% url "aboutus" %}">About Us</a>
                 </li>
                 <li class="navbar-item {% if request.path == '/contactus' %}active{% endif %}">
-                    <a href="">Contact Us</a>
+                    <a href="{% url "contactus" %}">Contact Us</a>
                 </li>
             </ul>
         </div>
