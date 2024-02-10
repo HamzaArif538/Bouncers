@@ -142,24 +142,24 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Toggle dropdown on button click
-        document.querySelector('.dropbtn').addEventListener('click', function(event) {
-            event.stopPropagation(); // Prevents the event from bubbling up the DOM tree
-            var dropdownContent = this.nextElementSibling;
-            var angleIcon = this.querySelector('.fa-angle-down');
-    
-            if (dropdownContent.style.display === 'block') {
-                dropdownContent.style.display = 'none';
-                angleIcon.classList.remove('fa-angle-up');
-                angleIcon.classList.add('fa-angle-down');
-            } else {
-                dropdownContent.style.display = 'block';
-                angleIcon.classList.remove('fa-angle-down');
-                angleIcon.classList.add('fa-angle-up');
+        const dropbtn = document.querySelector('.dropbtn');
+    const dropdownContent = document.querySelector('.dropdown-content');
+    const angleIcon = dropbtn.querySelector('.fa-angle-down');
 
-                
+    dropbtn.addEventListener('click', function(event) {
+        event.stopPropagation();
+        dropdownContent.classList.toggle('show');
+        angleIcon.classList.toggle('fa-angle-up');
+        angleIcon.classList.toggle('fa-angle-down');
+    });
 
-            }
-        });
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.dropdown')) {
+            dropdownContent.classList.remove('show');
+            angleIcon.classList.remove('fa-angle-up');
+            angleIcon.classList.add('fa-angle-down');
+        }
+    });
     
         // Close dropdown when clicking outside
         document.addEventListener('click', function(event) {

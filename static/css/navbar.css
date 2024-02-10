@@ -200,6 +200,7 @@ body{
     width: 215px;
     height: 25px;
     transition: 0.5s;
+    display: block;
 }
 
 /* Change color of dropdown links on hover */
@@ -209,10 +210,14 @@ body{
     color: var(--color-primary);
 }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
+.show{
     display: block;
 }
+
+/* Show the dropdown menu on hover */
+/* .dropdown:hover .dropdown-content {
+    display: block;
+} */
 
 /* Columns */
 .column {
