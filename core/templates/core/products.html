@@ -5,11 +5,183 @@
 
 {% block content %}
 
+<link rel="stylesheet" href="{% static '/css/products.css' %}">
+<link rel="stylesheet" href="{% static '/css/colors.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-straight/css/uicons-regular-straight.css'>
 
-<div class="ahe">
-    helloaof
+<div class="productcontainer">
+    <div class="pagetop">
+        <a href='/' class="pageinfolight">
+            Home
+        </a> 
+        <i class="pageinfoicon fa-solid fa-angle-right"></i>
+        <p class="pageinfoaddress">
+            Products
+        </p>
+    </div>
+
+
+    <div class="productcontmain">
+        <div class="productmain-top">
+            <div class="productmaintop-total">
+                We have <p class='green'>12</p> items for you!
+            </div>
+            <div class="productmaintop-drop">
+                <div class="productmaindrop-down">
+                    <button class="dropbtn-pro"> 
+                        <i class="fi fi-rs-category"></i>
+                        <p>Categories</p>
+                        <i class="pro fa-solid fa-angle-down"></i>
+                    </button>
+                    <div class="dropdown-content-pro">
+                        <div class="column-pro">
+                            <a class='dropitems-pro' href="#">
+                                <p>Peshawari Chappal</p>
+                            </a>
+                            <a class='dropitems-pro' href="#">
+                                <p>Formal Shoes</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="productmaindrop-down">
+                    <div class="productmaindrop-down">
+                        <button class="dropbtn-pro"> 
+                            <i class="pro fi fi-rs-apps-sort"></i>
+                            <p class='sorting'>Sort by:</p>
+                            <i class="pro fa-solid fa-angle-down"></i>
+                        </button>
+                        <div class="dropdown-content-pro">
+                            <div class="column-pro">
+                                <a class='dropitems-pro' href="#">
+                                    <p>Default</p>
+                                </a>
+                                <a class='dropitems-pro' href="#">
+                                    <p>Oldest</p>
+                                </a>
+                                <a class='dropitems-pro' href="#">
+                                    <p>Newest</p>
+                                </a>
+                                <a class='dropitems-pro' href="#">
+                                    <p>Price: Low to High</p>
+                                </a>
+                                <a class='dropitems-pro' href="#">
+                                    <p>Price: Hight to Low</p>
+                                </a>
+                                <a class='dropitems-pro' href="#">
+                                    <p>Name: A-Z</p>
+                                </a>
+                                <a class='dropitems-pro' href="#">
+                                    <p>Name: Z-A</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="productimp-main">
+            <div class="productimpmain-top">
+                {% for i in product %}
+                <div class="productbox">
+                    <div class="productbox-top">
+                        <div class="productboxtop-image">
+                            <a href="#"><img class='product-img' src="{{i.picture.url}}" alt=""></a>
+                        </div>
+                        <div class="productboxtop-off">
+                            -{{i.percentoff|floatformat:0 }}%
+                        </div>
+                    </div>
+                    <div class="productbox-bot">
+                        <div class="productboxbot-text">
+                            <div class="productboxtext-category">
+                                {{i.category}}
+                            </div>
+                            <div class="productboxtext-name">
+                                <a href="#" class="productboxname-link">
+                                    {{i.name}} - {{i.color}}
+                                </a>
+                            </div>
+                            <div class="productboxtext-price">
+                                <div class="productboxprice-new">
+                                    £{{i.price}}
+                                </div>
+                                <div class="productboxprice-old">
+                                    £{{i.oldprice}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="productboxbot-buttons">
+                            <a href='#' class='productbox-btn' >
+                                <i class="productbox-icon fi fi-rs-heart"></i>
+                                <p class="productboxbtn-text">Wishlist</p>
+                            </a>
+                            <a href='#' class='productbox-btn' >
+                                <i class="productbox-icon fi fi-rs-shopping-cart"></i>
+                                <p class="productboxbtn-text">Cart</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                {% endfor %}
+            </div>
+
+            <div class="productimpman-pagination">
+                Pagination.............
+            </div>
+        </div>
+
+
+
+    </div>
+
+
 </div>
 
+
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdownButtons = document.querySelectorAll('.dropbtn-pro');
+        dropdownButtons.forEach(function(dropbtn) {
+            const dropdownContent = dropbtn.nextElementSibling;
+            const angleIcon = dropbtn.querySelector('.fa-angle-down');
+    
+            dropbtn.addEventListener('click', function(event) {
+                event.stopPropagation();
+                dropdownContent.classList.toggle('show');
+                angleIcon.classList.toggle('fa-angle-up');
+                angleIcon.classList.toggle('fa-angle-down');
+            });
+        });
+    
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.productmaindrop-down')) {
+                const dropdownContents = document.querySelectorAll('.dropdown-content-pro');
+                dropdownContents.forEach(function(dropdownContent) {
+                    dropdownContent.classList.remove('show');
+                    const angleIcon = dropdownContent.previousElementSibling.querySelector('.fa-angle-up');
+                    if (angleIcon) {
+                        angleIcon.classList.remove('fa-angle-up');
+                        angleIcon.classList.add('fa-angle-down');
+                    }
+                });
+            }
+        });
+    });
+    
+
+</script>
 
 
 {% endblock content %}

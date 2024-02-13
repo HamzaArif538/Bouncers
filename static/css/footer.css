@@ -24,7 +24,7 @@
     background-color: #f4f6fa;
     border-radius: 10px;
     height: 140px;
-    
+    margin-top:10px;
 
 }
 
@@ -191,7 +191,7 @@
     margin-top: 10px;
 }
 
-.footerfollow-links li{
+.footerfollow-links .footerlinks-li{
     background-color: var(--color-primary);
     width: 30px;
     height: 30px;
@@ -204,12 +204,12 @@
     cursor: pointer;
 }
 
-.footerfollow-links li a{
+.footerfollow-links .footerlinks-li .footerlinksli-a{
     color: #fff;
     font-size: 18px;
 }
 
-.footerfollow-links li:hover{
+.footerfollow-links .footerlinks-li:hover{
     transform: scale(1.1);
     box-shadow: 1px 1px 3px 1px black;
 }
