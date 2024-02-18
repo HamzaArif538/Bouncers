@@ -6,9 +6,17 @@ class Product(models.Model):
     oldprice = models.IntegerField(null=True)
     color = models.CharField(max_length=50, null=True)
     picture = models.ImageField(upload_to='product_images/', null=True, blank=True)
+    GENDER = (
+        ('Men','Men'),
+        ('Women', 'Women')
+    )
+    gender = models.CharField(max_length=10, null=True, choices=GENDER)
     CATEGORY = (
         ('Formal Shoes', 'Formal Shoes'),
-        ('Peshawari', 'Peshawari')
+        ('Peshawari', 'Peshawari'),
+        ('Loafers', 'Loafers'),
+        ('Khussa', 'Khussa'),
+        ('High Heels', 'High Heels'),
     )
     category = models.CharField(max_length=200, null=True, choices=CATEGORY)
     AVAILABILITY = (

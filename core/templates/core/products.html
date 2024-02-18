@@ -26,7 +26,7 @@
     <div class="productcontmain">
         <div class="productmain-top">
             <div class="productmaintop-total">
-                We have <p class='green'>12</p> items for you!
+                We have <p class='green'>{{totalproducts}} </p> items for you!
             </div>
             <div class="productmaintop-drop">
                 <div class="productmaindrop-down">
@@ -37,12 +37,25 @@
                     </button>
                     <div class="dropdown-content-pro">
                         <div class="column-pro">
-                            <a class='dropitems-pro' href="#">
+                            <a class='dropitems-pro dropitems-category' value="all_cats" href="" >
+                                <p>All</p>
+                            </a>
+                            <a class='dropitems-pro dropitems-category' value='loafers' href="">
+                                <p>Loafers</p>
+                            </a>
+                            <a class='dropitems-pro dropitems-category' value='peshawari' href="">
                                 <p>Peshawari Chappal</p>
                             </a>
-                            <a class='dropitems-pro' href="#">
+                            <a class='dropitems-pro dropitems-category' value='formal' href="">
                                 <p>Formal Shoes</p>
                             </a>
+                            <a class='dropitems-pro dropitems-category' value='khussa' href="">
+                                <p>Khussa</p>
+                            </a>
+                            <a class='dropitems-pro dropitems-category' value='heels' href="">
+                                <p>High Heels</p>
+                            </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -55,25 +68,22 @@
                         </button>
                         <div class="dropdown-content-pro">
                             <div class="column-pro">
-                                <a class='dropitems-pro' href="#">
-                                    <p>Default</p>
-                                </a>
-                                <a class='dropitems-pro' href="#">
+                                <a class='dropitems-pro dropitems-sortings' value="oldest" href="?sort=oldest">
                                     <p>Oldest</p>
                                 </a>
-                                <a class='dropitems-pro' href="#">
+                                <a class='dropitems-pro dropitems-sortings' value="latest" href="?sort=latest">
                                     <p>Newest</p>
                                 </a>
-                                <a class='dropitems-pro' href="#">
+                                <a class='dropitems-pro dropitems-sortings' value="price_low" href="?sort=price_low">
                                     <p>Price: Low to High</p>
                                 </a>
-                                <a class='dropitems-pro' href="#">
+                                <a class='dropitems-pro dropitems-sortings' value="price_high" href="?sort=price_high">
                                     <p>Price: Hight to Low</p>
                                 </a>
-                                <a class='dropitems-pro' href="#">
+                                <a class='dropitems-pro dropitems-sortings' value="name_asc" href="?sort=name_asc">
                                     <p>Name: A-Z</p>
                                 </a>
-                                <a class='dropitems-pro' href="#">
+                                <a class='dropitems-pro dropitems-sortings' value="name_desc" href="?sort=name_desc">
                                     <p>Name: Z-A</p>
                                 </a>
                             </div>
@@ -85,7 +95,7 @@
 
 
         <div class="productimp-main">
-            <div class="productimpmain-top">
+            <div class="productimpmain-top" id='product-items'>
                 {% for i in product %}
                 <div class="productbox">
                     <div class="productbox-top">
@@ -132,7 +142,36 @@
             </div>
 
             <div class="productimpman-pagination">
-                Pagination.............
+                <span class="step-links">
+                    {% if product.paginator.num_pages > 1 %}
+                        {% if product.has_previous %}
+                            <a href="?page=1"><i class="footwearpagination fa-solid fa-chevron-left"></i></a>
+                        {% endif %}
+            
+                        {% for i in product.paginator.page_range %}
+                            {% if i == product.number %}
+                                <span class="footwearpagination page-current">{{ i }}</span>
+                            {% elif i == 1 and product.number > 3 %}
+                                {% if product.number > 3 %}
+                                    <a class='footwearpagination' href="?page=1">1</a>
+                                {% else %}
+                                    <span class="footwearpagination">1</span>
+                                {% endif %}
+                            {% elif i == product.paginator.num_pages and product.number < product.paginator.num_pages|add:"-2" %}
+                                <span class="footwearpagination">...</span>
+                                <a class='footwearpagination' href="?page={{ i }}">{{ i }}</a>
+                            {% elif i <= product.paginator.num_pages|add:"-2" and i >= product.number|add:"-2" %}
+                                <a class='footwearpagination' href="?page={{ i }}">{{ i }}</a>
+                            {% elif i >= product.paginator.num_pages|add:"-2" %}
+                                <a class='footwearpagination' href="?page={{ i }}">{{ i }}</a>
+                            {% endif %}
+                        {% endfor %}
+            
+                        {% if product.has_next %}
+                            <a id='footNPIcon' href="?page={{ product.paginator.num_pages }}"><i class="footwearpagination fa-solid fa-chevron-right"></i></a>
+                        {% endif %}
+                    {% endif %}
+                </span>
             </div>
         </div>
 
@@ -152,6 +191,9 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const dropdownButtons = document.querySelectorAll('.dropbtn-pro');
+        const productItems = document.querySelectorAll('.productbox');
+        const allProducts = Array.from(productItems);
+    
         dropdownButtons.forEach(function(dropbtn) {
             const dropdownContent = dropbtn.nextElementSibling;
             const angleIcon = dropbtn.querySelector('.fa-angle-down');
@@ -178,8 +220,52 @@
                 });
             }
         });
-    });
     
+        const dropItems = document.querySelectorAll('.dropitems-pro');
+    
+        dropItems.forEach(function(dropItem) {
+            dropItem.addEventListener('click', function(event) {
+                event.preventDefault();
+                const category = dropItem.getAttribute('data-category');
+    
+                // Filter products by category
+                allProducts.forEach(function(productItem) {
+                    const productCategory = productItem.querySelector('.productboxtext-category').textContent.trim();
+                    if (category === 'All' || productCategory === category) {
+                        productItem.style.display = 'flex';
+                    } else {
+                        productItem.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+
+        const dropItems_sorting = document.querySelectorAll('.dropitems-sortings');
+    
+        dropItems_sorting.forEach(function(dropItems_sorting) {
+            dropItems_sorting.addEventListener('click', function(event) {
+                event.preventDefault();
+                const sortOption = dropItems_sorting.getAttribute('value');
+                const currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.set('sort', sortOption);
+                window.location.href = currentUrl;
+            });
+        });
+
+        const dropItems_category = document.querySelectorAll('.dropitems-category');
+    
+        dropItems_category.forEach(function(dropItems_category) {
+            dropItems_category.addEventListener('click', function(event) {
+                event.preventDefault();
+                const categoryOption = dropItems_category.getAttribute('value');
+                const currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.set('category', categoryOption);
+                window.location.href = currentUrl;
+            });
+        });
+
+    })
 
 </script>
 

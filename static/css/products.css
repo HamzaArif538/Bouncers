@@ -114,14 +114,13 @@
 }
 
 /* Dropdown Content (Hidden by Default) */
+
 .dropdown-content-pro {
     display: none;
     position: absolute;
     background-color: #fff;
-    /* min-width: 160px; */
-    z-index: 1;
+    z-index: 11;
     width: 140px;
-    /* border: 1px solid #58d49a; */
     border-radius: 5px;
     box-shadow: 5px 5px 15px 0px #cacaca;
 
@@ -195,7 +194,8 @@
 .productimp-main .productimpmain-top{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    margin-bottom: 20px;
 }
 
 .productimpmain-top .productbox{
@@ -203,6 +203,7 @@
     flex-direction: column;
     border: 1px solid var(--color-line);
     border-radius: 12px;
+    margin: 20px 10px;
 }
 
 .productimpmain-top .productbox:hover{
@@ -331,3 +332,43 @@
 .productbox-btn .productbox-icon{
     margin-right: 5px;
 }
+
+
+/* Pagination */
+.step-links {
+    display: flex;
+    text-decoration: none;
+}
+
+.step-links .footwearpagination{
+    color: var(--color-font);
+    background:#eeeeee;
+    font-size: 20px;
+    padding: 7px 14px;
+    /* height: 20px; */
+    margin: 10px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10px;
+    text-decoration: none;
+}
+
+
+.step-links a{
+    text-decoration: none;
+}
+
+.step-links .footwearpagination:hover{
+    background: var(--color-primary) ;
+    color: #fff;
+}
+
+.step-links .footwearpagination.page-current {
+    background: var(--color-primary) ;
+    color: #fff;
+}
+
